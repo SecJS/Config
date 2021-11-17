@@ -4,6 +4,7 @@
 
 [![GitHub followers](https://img.shields.io/github/followers/jlenon7.svg?style=social&label=Follow&maxAge=2592000)](https://github.com/jlenon7?tab=followers)
 [![GitHub stars](https://img.shields.io/github/stars/secjs/config.svg?style=social&label=Star&maxAge=2592000)](https://github.com/secjs/config/stargazers/)
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/secjs)
 
 <p>
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/secjs/config?style=for-the-badge&logo=appveyor">
@@ -11,8 +12,6 @@
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/secjs/config?style=for-the-badge&logo=appveyor">
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge&logo=appveyor">
-
-  <a href="https://www.buymeacoffee.com/secjs" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 </p>
 
 The intention behind this repository is to always maintain a `Config` package that will handle all the config files inside config folder.
@@ -25,7 +24,7 @@ The intention behind this repository is to always maintain a `Config` package th
 > it keeps as dev dependency because one day `@secjs/core` will install everything once.
 
 ```bash
-npm install @secjs/contracts @secjs/exceptions
+npm install @secjs/env @secjs/utils @secjs/logger @secjs/contracts @secjs/exceptions
 ```
 
 > Then you can install the package using:
@@ -40,7 +39,7 @@ npm install @secjs/config
 
 > First you need to create the configuration files in the config folder on project root path. 
 > Is extremely important to use export default in these configurations. 
-> You can check [here](https://github.com/SecJS/Config/tree/main/config) more templates.
+> You can check more templates [here](https://github.com/SecJS/Config/tree/main/config).
 
 ```ts
 // ./config/app.ts
@@ -104,7 +103,7 @@ export default {
 }
 ```
 
-> ✅ GOOD! ✅
+> 🟢 GOOD! 🟢
 
 ```ts
 // ./config/app.ts
