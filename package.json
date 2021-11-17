@@ -9,7 +9,6 @@
   "homepage": "https://github.com/SecJS/Config#readme",
   "scripts": {
     "build": "tsc",
-    "commit": "cz",
     "test": "jest --verbose",
     "test:debug": "DEBUG=* jest --verbose",
     "lint:fix": "eslint \"{src,tests}/**/*.ts\" --fix"
@@ -31,6 +30,7 @@
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.31.0",
     "@typescript-eslint/parser": "4.31.0",
+    "commitizen": "4.2.4",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
@@ -41,7 +41,6 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-standard": "5.0.0",
-    "glob": "^7.2.0",
     "husky": "3.0.9",
     "jest": "27.1.0",
     "lint-staged": "9.4.3",

@@ -15,6 +15,8 @@
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/secjs/config?style=for-the-badge&logo=appveyor">
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge&logo=appveyor">
+
+  <img alt="Commitizen" src="https://img.shields.io/badge/commitizen-friendly-brightgreen?style=for-the-badge&logo=appveyor">
 </p>
 
 The intention behind this repository is to always maintain a `Config` package that will handle all the config files inside config folder.

@@ -22,7 +22,7 @@ Go through the following points, before creating a new PR.
 2. Once approved, go ahead and fork the repository.
 3. Make sure to start from the `develop`, since this is the upto date branch.
 4. Make sure to keep commits small and relevant.
-5. We follow [conventional-commits](https://github.com/conventional-changelog/conventional-changelog) to structure our commit messages. Instead of running `git commit`, you must run `npm commit`, which will show you prompts to create a valid commit message.
+5. We follow [conventional-commits](https://github.com/conventional-changelog/conventional-changelog) to structure our commit messages. Instead of running `git commit -m "message"`, you must run only `git commit`, which will show you prompts to create a valid commit message.
 6. Once done with all the changes, create a PR against the `develop` branch.
 
 ## Share an RFC for new features or big changes
