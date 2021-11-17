@@ -9,6 +9,7 @@
   "homepage": "https://github.com/SecJS/Config#readme",
   "scripts": {
     "build": "tsc",
+    "commit": "cz",
     "test": "jest --verbose",
     "test:debug": "DEBUG=* jest --verbose",
     "lint:fix": "eslint \"{src,tests}/**/*.ts\" --fix"
@@ -30,6 +31,7 @@
     "@types/uuid": "8.3.0",
     "@typescript-eslint/eslint-plugin": "4.31.0",
     "@typescript-eslint/parser": "4.31.0",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
@@ -64,7 +66,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   },
   "jest": {
@@ -155,5 +158,10 @@
     "src/**/*.js",
     "index.d.ts",
     "index.js"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
