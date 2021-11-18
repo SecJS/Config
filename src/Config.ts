@@ -4,12 +4,21 @@ import { parse } from 'path'
 import { Env } from '@secjs/env'
 import { getFolders } from '@secjs/utils'
 import { FileContract } from '@secjs/contracts'
+import { getFoldersSync } from './utils/getFoldersSync'
 import { InternalServerException } from '@secjs/exceptions'
 
 export class Config {
   private static configs: Map<string, any> = new Map()
 
   constructor() {
+    const isInitialized = Config.configs.size >= 1
+
+    if (isInitialized) {
+      logger.debug(
+        'Reloading the Config class has no effect on the configuration files, only for environment variables, as the files have already been loaded as Singletons',
+      )
+    }
+
     Config.configs.clear()
   }
 
@@ -26,30 +35,57 @@ export class Config {
       })
     }
 
-    if (!config) config = Env(mainKey, defaultValue)
+    if (!config) config = this.configs.get(`env-${mainKey}`)
+    if (!config) config = defaultValue
 
     return config
   }
 
+  loadSync() {
+    Config.loadEnvs()
+
+    const path = `${process.cwd()}/config`
+
+    const { files } = getFoldersSync(path, true)
+
+    files.forEach(file => Config.loadOnDemand(`${path}/${file.name}`, files, 0))
+
+    return this
+  }
+
   async load() {
-    // Important to load all envs in process.env
-    Env('NODE_ENV', '')
+    Config.loadEnvs()
 
     const path = `${process.cwd()}/config`
 
     const { files } = await getFolders(path, true)
 
-    files.forEach(file => this.loadOnDemand(`${path}/${file.name}`, files, 0))
+    files.forEach(file => Config.loadOnDemand(`${path}/${file.name}`, files, 0))
 
     return this
   }
 
-  private loadOnDemand(path: string, files: FileContract[], callNumber = 0) {
+  private static loadEnvs() {
+    // Important to load all env files in process.env
+    Env('NODE_ENV', '')
+
+    Object.keys(process.env).forEach(key => {
+      const envValue = process.env[key]
+
+      this.configs.set(`env-${key}`, envValue)
+    })
+  }
+
+  private static loadOnDemand(
+    path: string,
+    files: FileContract[],
+    callNumber = 0,
+  ) {
     const { dir, name, base } = parse(path)
     const file = files.find(file => file.name === base)
 
     if (!file) return
-    if (Config.configs.get(name)) return
+    if (this.configs.get(name)) return
 
     if (callNumber > 500) {
       const content = `Your config file ${base} is using Config.get() to an other config file that is using a Config.get('${name}*'), creating a infinite recursive call.`
@@ -61,6 +97,8 @@ export class Config {
       const matches = file.value.match(/\(([^)]+)\)/g)
 
       for (const match of matches) {
+        if (this.configs.get(`env-${match}`)) continue
+
         const filePath = `${dir}/${
           match.replace(/[(^)']/g, '').split('.')[0]
         }.ts`
@@ -70,6 +108,6 @@ export class Config {
     }
 
     logger.debug(`Loading ${name} configuration file`)
-    Config.configs.set(name, require(`${dir}/${base}`).default)
+    this.configs.set(name, require(`${dir}/${base}`).default)
   }
 }

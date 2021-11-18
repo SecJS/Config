@@ -1,6 +1,6 @@
 {
   "name": "@secjs/config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "license": "MIT",
   "author": "João Lenon",
@@ -151,12 +151,12 @@
     }
   },
   "files": [
-    "src/*.d.ts",
     "src/*.js",
-    "src/**/*.d.ts",
+    "src/*.d.ts",
     "src/**/*.js",
-    "index.d.ts",
-    "index.js"
+    "src/**/*.d.ts",
+    "*.js",
+    "*.d.ts"
   ],
   "config": {
     "commitizen": {

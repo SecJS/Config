@@ -82,7 +82,7 @@ import { Config } from '@secjs/config'
 console.log(Config.get('app')) // { hello: 'world' }
 console.log(Config.get('app.hello')) // world
 
-// You can use Config to get environment variables too but we recommend using @secjs/env
+// You can use Config to get environment variables too but we recommend using Env function from @secjs/env
 console.log(Config.get('DB_HOST')) // 127.0.0.1
 
 // You can use a defaultValue, if config does not exist, defaultValue will be returned

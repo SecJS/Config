@@ -70,4 +70,11 @@ describe('\n Config', () => {
       await rm(circularPath)
     }
   })
+
+  it('should be able to use loadSync method to load configs without need of promises', async () => {
+    new Config().loadSync()
+
+    expect(Config.get('DB_NAME')).toBe('testing')
+    expect(Config.get('database.dbName')).toBe('testing')
+  })
 })
