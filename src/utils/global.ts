@@ -10,7 +10,5 @@ declare global {
   }
 }
 
-new ConfigInstance().loadSync()
-
 const _global = global as any
 _global.Config = ConfigInstance
