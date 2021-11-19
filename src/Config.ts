@@ -41,10 +41,10 @@ export class Config {
     return config
   }
 
-  loadSync() {
+  loadSync(configPath = '/config') {
     Config.loadEnvs()
 
-    const path = `${process.cwd()}/config`
+    const path = `${process.cwd()}/${configPath}`
 
     const { files } = getFoldersSync(path, true)
 
@@ -53,10 +53,10 @@ export class Config {
     return this
   }
 
-  async load() {
+  async load(configPath = '/config') {
     Config.loadEnvs()
 
-    const path = `${process.cwd()}/config`
+    const path = `${process.cwd()}/${configPath}`
 
     const { files } = await getFolders(path, true)
 
