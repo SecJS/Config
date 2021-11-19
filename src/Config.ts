@@ -88,6 +88,9 @@ export class Config {
     callNumber = 0,
   ) {
     const { dir, name, base } = parse(path)
+
+    if (base.includes('.map') || base.includes('.d.ts')) return
+
     const file = files.find(file => file.name === base)
 
     if (!file) return
@@ -114,6 +117,6 @@ export class Config {
     }
 
     logger.debug(`Loading ${name} configuration file`)
-    this.configs.set(name, require(`${dir}/${base}`).default)
+    this.configs.set(name, require(`${dir}/${name}`).default)
   }
 }
