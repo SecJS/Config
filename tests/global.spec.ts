@@ -1,5 +1,7 @@
 import '../src/utils/global'
 
+new Config().loadSync()
+
 describe('\n Config', () => {
   it('should be able to use global Config instance', async () => {
     expect(Config.get('app.hello')).toBe('world')

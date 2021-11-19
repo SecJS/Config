@@ -4,9 +4,10 @@ export {}
 
 declare global {
   class Config {
+    loadSync(configPath?: string): void
+    load(configPath?: string): Promise<void>
+    static verifyPath(folderName?: string): string
     static get<T>(key: string, defaultValue?: any): T
-    load(): Promise<void>
-    loadSync(): void
   }
 }
 
