@@ -44,7 +44,7 @@ export class Config {
   loadSync(configPath = '/config') {
     Config.loadEnvs()
 
-    const path = `${process.cwd()}/${configPath}`
+    const path = `${process.cwd()}${configPath}`
 
     const { files } = getFoldersSync(path, true)
 
@@ -56,7 +56,7 @@ export class Config {
   async load(configPath = '/config') {
     Config.loadEnvs()
 
-    const path = `${process.cwd()}/${configPath}`
+    const path = `${process.cwd()}${configPath}`
 
     const { files } = await getFolders(path, true)
 
@@ -66,9 +66,9 @@ export class Config {
   }
 
   static verifyPath(folderName = 'dist') {
-    if (process.env.NODE_ENV === 'testing') return `/${folderName}/config`
+    if (process.env.NODE_ENV === 'testing') return '/config'
 
-    return '/config'
+    return `/${folderName}/config`
   }
 
   private static loadEnvs() {
