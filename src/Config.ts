@@ -65,6 +65,12 @@ export class Config {
     return this
   }
 
+  private static verifyPath(folderName = 'dist') {
+    if (process.env.NODE_ENV === 'testing') return `/${folderName}/config`
+
+    return '/config'
+  }
+
   private static loadEnvs() {
     // Important to load all env files in process.env
     Env('NODE_ENV', '')
