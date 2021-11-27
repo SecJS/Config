@@ -7,7 +7,7 @@ declare global {
     loadSync(configPath?: string): void
     load(configPath?: string): Promise<void>
     static verifyPath(folderName?: string): string
-    static get<T>(key: string, defaultValue?: any): T
+    static get<T = any>(key: string, defaultValue?: any): T | undefined
   }
 }
 
