@@ -2,9 +2,7 @@ import logger from './utils/logger'
 
 import { parse } from 'path'
 import { Env } from '@secjs/env'
-import { getFolders } from '@secjs/utils'
-import { FileContract } from '@secjs/contracts'
-import { getFoldersSync } from './utils/getFoldersSync'
+import { File, Folder, Path } from '@secjs/utils'
 import { InternalServerException } from '@secjs/exceptions'
 
 export class Config {
@@ -22,7 +20,7 @@ export class Config {
     Config.configs.clear()
   }
 
-  static get<T>(key: string, defaultValue = undefined): T {
+  static get<T = any>(key: string, defaultValue = undefined): T | undefined {
     const [mainKey, ...keys] = key.split('.')
 
     let config = this.configs.get(mainKey)
@@ -44,11 +42,11 @@ export class Config {
   loadSync(configPath = '/config') {
     Config.loadEnvs()
 
-    const path = `${process.cwd()}${configPath}`
+    const path = Path.pwd(configPath)
 
-    const { files } = getFoldersSync(path, true)
+    const { files } = new Folder(path).loadSync({ withFileContent: true })
 
-    files.forEach(file => Config.loadOnDemand(`${path}/${file.name}`, files, 0))
+    files.forEach(file => Config.loadOnDemand(file.path, files, 0))
 
     return this
   }
@@ -56,11 +54,11 @@ export class Config {
   async load(configPath = '/config') {
     Config.loadEnvs()
 
-    const path = `${process.cwd()}${configPath}`
+    const path = Path.pwd(configPath)
 
-    const { files } = await getFolders(path, true)
+    const { files } = await new Folder(path).load({ withFileContent: true })
 
-    files.forEach(file => Config.loadOnDemand(`${path}/${file.name}`, files, 0))
+    files.forEach(file => Config.loadOnDemand(file.path, files, 0))
 
     return this
   }
@@ -82,16 +80,12 @@ export class Config {
     })
   }
 
-  private static loadOnDemand(
-    path: string,
-    files: FileContract[],
-    callNumber = 0,
-  ) {
+  private static loadOnDemand(path: string, files: File[], callNumber = 0) {
     const { dir, name, base } = parse(path)
 
     if (base.includes('.map') || base.includes('.d.ts')) return
 
-    const file = files.find(file => file.name === base)
+    const file = files.find(file => file.base === base)
 
     if (!file) return
     if (this.configs.get(name)) return
@@ -102,8 +96,10 @@ export class Config {
       throw new InternalServerException(content)
     }
 
-    if (typeof file.value === 'string' && file.value.includes('Config.get')) {
-      const matches = file.value.match(/\(([^)]+)\)/g)
+    const fileContent = file.getContentSync().toString()
+
+    if (fileContent.includes('Config.get')) {
+      const matches = fileContent.match(/\(([^)]+)\)/g)
 
       for (const match of matches) {
         if (this.configs.get(`env-${match}`)) continue
