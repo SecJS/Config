@@ -99,14 +99,14 @@ export class Config {
     const fileContent = file.getContentSync().toString()
 
     if (fileContent.includes('Config.get')) {
-      const matches = fileContent.match(/\(([^)]+)\)/g)
+      const matches = fileContent.match(/Config.get\(([^)]+)\)/g)
 
-      for (const match of matches) {
+      for (let match of matches) {
+        match = match.replace('Config.get', '').replace(/[(^)']/g, '')
         if (this.configs.get(`env-${match}`)) continue
 
-        const filePath = `${dir}/${
-          match.replace(/[(^)']/g, '').split('.')[0]
-        }.ts`
+        const extension = process.env.NODE_TS === 'true' ? 'ts' : 'js'
+        const filePath = `${dir}/${match.split('.')[0]}.${extension}`
 
         this.loadOnDemand(filePath, files, callNumber + 1)
       }
