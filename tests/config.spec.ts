@@ -2,7 +2,10 @@ import { Config } from '../src/Config'
 import { rm, writeFile } from 'fs/promises'
 
 describe('\n Config', () => {
-  beforeAll(() => (process.env.DB_NAME = 'testing'))
+  beforeAll(() => {
+    process.env.NODE_TS = 'true'
+    process.env.DB_NAME = 'testing'
+  })
 
   it('should be able to get environment variables', async () => {
     await new Config().load()
