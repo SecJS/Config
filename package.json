@@ -1,6 +1,6 @@
 {
   "name": "@secjs/config",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "license": "MIT",
   "author": "João Lenon",
@@ -22,7 +22,6 @@
     "@secjs/contracts": "1.1.7",
     "@secjs/env": "1.2.5",
     "@secjs/exceptions": "1.0.4",
-    "@secjs/logger": "1.2.2",
     "@secjs/utils": "1.4.3",
     "@types/debug": "4.1.5",
     "@types/jest": "27.0.1",

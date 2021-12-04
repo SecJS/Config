@@ -1,4 +1,4 @@
-import logger from './utils/logger'
+import { debugFn } from './utils/debug'
 
 import { parse } from 'path'
 import { Env } from '@secjs/env'
@@ -12,7 +12,7 @@ export class Config {
     const isInitialized = Config.configs.size >= 1
 
     if (isInitialized) {
-      logger.debug(
+      debugFn(
         'Reloading the Config class has no effect on the configuration files, only for environment variables, as the files have already been loaded as Singletons',
       )
     }
@@ -112,7 +112,7 @@ export class Config {
       }
     }
 
-    logger.debug(`Loading ${name} configuration file`)
+    debugFn(`Loading ${name} configuration file`)
     this.configs.set(name, require(`${dir}/${name}`).default)
   }
 }
