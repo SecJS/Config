@@ -12,4 +12,7 @@ declare global {
 }
 
 const _global = global as any
+
+new ConfigInstance().loadSync()
+
 _global.Config = ConfigInstance
