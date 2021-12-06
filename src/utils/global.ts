@@ -5,6 +5,7 @@ export {}
 
 declare global {
   class Config {
+    loadIfUnloaded(configPath?: string): void
     loadSync(configPath?: string): void
     load(configPath?: string): Promise<void>
     static verifyPath(folderName?: string): string
@@ -16,6 +17,6 @@ const _global = global as any
 
 Path.switchEnvVerify()
 
-new ConfigInstance().loadSync()
+new ConfigInstance().loadIfUnloaded()
 
 _global.Config = ConfigInstance

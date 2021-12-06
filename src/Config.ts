@@ -39,6 +39,10 @@ export class Config {
     return config
   }
 
+  loadIfUnloaded(configPath = '/config') {
+    if (!Config.configs.size) this.loadSync(configPath)
+  }
+
   loadSync(configPath = '/config') {
     Config.loadEnvs()
 
@@ -47,8 +51,6 @@ export class Config {
     const { files } = new Folder(path).loadSync({ withFileContent: true })
 
     files.forEach(file => Config.loadOnDemand(file.path, files, 0))
-
-    return this
   }
 
   async load(configPath = '/config') {
@@ -59,14 +61,6 @@ export class Config {
     const { files } = await new Folder(path).load({ withFileContent: true })
 
     files.forEach(file => Config.loadOnDemand(file.path, files, 0))
-
-    return this
-  }
-
-  static verifyPath(folderName = 'dist') {
-    if (process.env.NODE_ENV === 'testing') return '/config'
-
-    return `/${folderName}/config`
   }
 
   private static loadEnvs() {
