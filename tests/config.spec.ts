@@ -80,13 +80,4 @@ describe('\n Config', () => {
     expect(Config.get('DB_NAME')).toBe('testing')
     expect(Config.get('database.dbName')).toBe('testing')
   })
-
-  it('should be able to use loadIfUnloaded method to load configs if they are not loaded', async () => {
-    expect(Config.get('app')).toBe(undefined)
-
-    new Config().loadIfUnloaded()
-
-    expect(Config.get('DB_NAME')).toBe('testing')
-    expect(Config.get('database.dbName')).toBe('testing')
-  })
 })

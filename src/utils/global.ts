@@ -1,4 +1,3 @@
-import { Path } from '@secjs/utils'
 import { Config as ConfigInstance } from '../Config'
 
 export {}
@@ -14,8 +13,6 @@ declare global {
 }
 
 const _global = global as any
-
-Path.switchEnvVerify()
 
 new ConfigInstance().loadIfUnloaded()
 
