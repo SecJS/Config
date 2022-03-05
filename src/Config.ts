@@ -1,18 +1,17 @@
-import { debugFn } from './utils/debug'
-
 import { parse } from 'path'
 import { Env } from '@secjs/env'
-import { File, Folder, Path } from '@secjs/utils'
+import { File, Folder, Path, Debug } from '@secjs/utils'
 import { InternalServerException } from '@secjs/exceptions'
 
 export class Config {
+  private static debug = new Debug(Config.name, 'api:configurations')
   private static configs: Map<string, any> = new Map()
 
   constructor() {
     const isInitialized = Config.configs.size >= 1
 
     if (isInitialized) {
-      debugFn(
+      Config.debug.log(
         'Reloading the Config class has no effect on the configuration files, only for environment variables, as the files have already been loaded as Singletons',
       )
     }
@@ -106,7 +105,7 @@ export class Config {
       }
     }
 
-    debugFn(`Loading ${name} configuration file`)
+    Config.debug.log(`Loading ${name} configuration file`)
     this.configs.set(name, require(`${dir}/${name}`).default)
   }
 }
